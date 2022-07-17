@@ -1,0 +1,10 @@
+﻿
+<button class="btn btn-success" value="@ProductId">Edit</button>
+<button class="btn btn-danger" value="@ProductId">Delete</button>
+
+
+@code {
+    [Parameter]
+    public int ProductId { get; set; }         
+
+}

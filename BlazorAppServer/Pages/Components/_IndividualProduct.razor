@@ -1,0 +1,71 @@
+﻿<div class="col-4 py-3">
+
+    <div class="card" @onclick="@(e => OnSelectedCard(Product.Name, Product.Color, e))">
+        <div class="card-header">
+            @Product.Name
+        </div>
+        <div class="card-body">
+            <h5>@Product.Name</h5>
+            <p>Price: @Product.Price</p>
+            <p>Quantity: @Product.Quantity</p>
+            <p>Body: @Product.Body</p>
+            <p>Neck: @Product.Neck</p>
+            <p>Color: @Product.Color</p>
+
+            <p class="pt-3">
+                Add to Favourite: <input type="checkbox" @onchange="OnCheckboxClick"/>
+            </p>
+
+        </div>
+        <div class="card-footer text-center">
+            <_EditDeleteButton ProductId="@Product.Id">                
+            </_EditDeleteButton>
+        </div>
+
+        @if (ChildContent != null)
+        {
+            
+            <p class="p-5">
+                @ChildContent
+            </p>
+
+        }
+        
+    </div>
+
+</div>
+
+
+@code {
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    public string SelectedCard { get; set; } = "";
+
+    [Parameter]
+    public Product Product { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OnEventChangeCallback { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnEventClickCallback { get; set; }
+
+    private async Task OnCheckboxClick(ChangeEventArgs e)
+    {
+
+        await OnEventChangeCallback.InvokeAsync(Convert.ToBoolean(e.Value));
+
+    }
+
+    private async Task OnSelectedCard(string? name, string? color, MouseEventArgs e)
+    {
+
+        string displayName = $"{name} - {color}";
+
+        await OnEventClickCallback.InvokeAsync(displayName);
+
+    }
+
+}

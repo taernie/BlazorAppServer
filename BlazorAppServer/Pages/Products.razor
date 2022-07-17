@@ -1,0 +1,102 @@
+﻿@page "/Products"
+@using InsideEdgeModels.BlazorModels;
+
+<div class="row">
+
+    <div class="col-12">
+        Favourites: @SelectedFavouriteCount
+    </div>
+
+    <div class="col-12">
+        Selected Card: @SelectedCard
+    </div>
+
+    @foreach (var product in products)
+    {
+
+        <_IndividualProduct 
+            Product="product" 
+            OnEventChangeCallback="FavouriteTotalCounts" 
+            OnEventClickCallback="LastSelectedCard"        
+        >
+            
+            Hey From Product Master..
+
+        </_IndividualProduct>
+
+    }
+
+</div>
+
+@code {
+    Product newProduct = new();
+
+    List<Product> products = new();
+
+    public int SelectedFavouriteCount { get; set; } = 0;
+
+    public string SelectedCard { get; set; } = "";     
+
+    protected override void OnInitialized()
+    {
+
+        products.Add(new Product()
+            {
+                Id = 1,
+                Name = "PRS SE Hollowbody Standard",
+                IsAvailable = true,
+                Price = 1999,
+                Quantity = 5,
+                Body = "Mahoganny",
+                Neck = "Mahoganny",
+                Color = "Red Burst"
+            });
+        products.Add(new Product()
+            {
+                Id = 2,
+                Name = "PRS SE Hollowbody Standard",
+                IsAvailable = true,
+                Price = 1999,
+                Quantity = 3,
+                Body = "Mahoganny",
+                Neck = "Mahoganny",
+                Color = "Sun Burst"
+            });
+        products.Add(new Product()
+            {
+                Id = 3,
+                Name = "PRS SE Hollowbody Standard",
+                IsAvailable = true,
+                Price = 1999,
+                Quantity = 2,
+                Body = "Mahoganny",
+                Neck = "Mahoganny",
+                Color = "Black"
+            });
+
+    }
+
+    public void FavouriteTotalCounts(bool isSelected)
+    {
+
+        if (isSelected)
+            SelectedFavouriteCount++;
+        else
+            SelectedFavouriteCount--;
+
+    }
+
+    public void LastSelectedCard(string name)
+    {
+
+        SelectedCard = name;
+
+    }
+
+}
+
+<style scoped>
+
+
+
+</style>
